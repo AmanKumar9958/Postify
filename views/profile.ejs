@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Postify</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <!-- Navbar -->
+    <%- include('partials/navbar', { user: user }) %>
+
+    <!-- Profile Section -->
+    <section class="flex items-center justify-center min-h-[60vh] py-12 px-6 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+        <div class="bg-gray-800 rounded-xl shadow-lg p-8 max-w-md w-full space-y-6 animate-fadeInUp">
+            <div class="flex flex-col items-center space-y-2">
+                <div class="bg-blue-600 rounded-full w-24 h-24 flex items-center justify-center text-4xl font-bold text-white mb-2">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-blue-400"><%= user.username %></h2>
+                <p class="text-gray-400">@<%= user.username %></p>
+            </div>
+            <div class="space-y-2">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-envelope text-blue-400"></i>
+                    <span class="text-gray-300"><%= user.email %></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-cake-candles text-blue-400"></i>
+                    <span class="text-gray-300">Age: <%= user.age %></span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-pen-to-square text-blue-400"></i>
+                    <a href="/myPosts"><span class="text-gray-300">My Posts: <%= posts.length %></span></a>
+                </div>
+            </div>
+            <div class="flex justify-center mt-6">
+                <a href="/" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition-all duration-300">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Animations -->
+    <style>
+        @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+        animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+</body>
+</html>

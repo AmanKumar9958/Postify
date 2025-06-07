@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts | Postify</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
+    </head>
+    <body class="bg-gray-900 text-white font-sans">
+
+    <!-- Navbar -->
+    <%- include('partials/navbar', { user: user }) %>
+
+    <!-- Hero Section -->
+    <section class="flex flex-col items-center justify-center text-center py-20 px-6 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
+        <div class="space-y-6 max-w-2xl w-full">
+            <h1 class="text-4xl md:text-5xl font-extrabold leading-tight animate-fadeInUp">All <span class="text-blue-500">Posts</span></h1>
+
+            <% if (posts.length === 0) { %>
+                <div class="mt-10 p-6 bg-gray-800 rounded-lg shadow-lg animate-fadeInUp delay-200">
+                    <p class="text-lg text-gray-300 mb-4">There are no posts, be first..</p>
+                    <a href="/" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-medium px-5 py-2 rounded-lg transition duration-300">
+                        Back to Home
+                    </a>
+                </div>
+            <% } else { %>
+                <h2 class="text-lg font-bold text-center text-red-500 hidden" id="errorMsg">Your are not User</h2>
+                    <script>
+                        const urlParams = new URLSearchParams(window.location.search);
+                        if (urlParams.get('error') === 'not_authorized') {
+                            const errorMsg = document.getElementById('errorMsg');
+                            errorMsg.classList.remove('hidden');
+
+                            setTimeout(() => {
+                                errorMsg.classList.add('hidden');
+                            }, 3000);
+                        }
+                    </script>
+                    <script>
+                        const urlPara = new URLSearchParams(window.location.search);
+                        if (urlPara.get('error') === 'you_are_not_user') {
+                            const errorMsg = document.getElementById('errorMsg');
+                            errorMsg.classList.remove('hidden');
+
+                            setTimeout(() => {
+                                errorMsg.classList.add('hidden');
+                            }, 3000);
+                        }
+                    </script>
+                <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    <% posts.reverse().forEach(post => { %>
+                        <div 
+                            class="bg-gray-800 rounded-xl border border-white/10 p-4 shadow transition-all hover:scale-105 hover:shadow-lg duration-300 cursor-pointer"
+                            data-title="<%= post.title.replace(/"/g, '&quot;') %>"
+                            data-user="<%= post.user ? post.user.username.replace(/"/g, '&quot;') : '[deleted user]' %>"
+                            data-content="<%= post.content.replace(/"/g, '&quot;') %>"
+                            onclick="handleCardClick(this)"
+                        >
+                            <% if (post.user) { %>
+                                <p class="text-blue-400 text-sm mb-1">@<%= post.user.username %></p>
+                            <% } else { %>
+                                <p class="text-red-400 text-sm italic mb-1">[deleted user]</p>
+                            <% } %>
+                            <h2 class="text-white font-bold text-lg truncate"><%= post.title %></h2>
+                            <p class="text-gray-300 text-sm mt-2 truncate"><%= post.content %></p>
+                            <!-- Like and Delete Section -->
+                            <div class="flex justify-between items-center mt-4">
+                                <div class="text-red-500 text-sm flex items-center gap-1" onclick="event.stopPropagation();">
+                                    <% const hasLiked = post.likes.includes(user._id); %>
+                                    <% if (!hasLiked) { %>
+                                        <a href="/like/<%= post._id %>">
+                                            <i class="fa-regular fa-heart"></i>
+                                        </a>
+                                    <% } else { %>
+                                        <a href="/like/<%= post._id %>">
+                                            <i class="fa-solid fa-heart" style="color: #ff0000;"></i>
+                                        </a>
+                                    <% } %>
+                                    <span><%= post.likes.length %></span>
+                                </div>
+                                <% if(post.user && post.user._id.toString() === user._id.toString()){ %>
+                                    <div class="flex items-center gap-3">
+                                        <div class="text-gray-400 hover:text-red-500 transition cursor-pointer" onclick="event.stopPropagation();">
+                                            <a href="/delete-post/<%= post._id %>">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                        <div class="text-gray-400 hover:text-blue-500 transition cursor-pointer" onclick="event.stopPropagation();">
+                                            <a href="/edit-post/<%= post._id %>">
+                                                <i class="fa-solid fa-pen-to-square"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    <% }) %>
+                    </div>
+            <% } %>
+            <!-- Modal Background -->
+            <div id="postModal" class="fixed inset-0 bg-white/30 z-50 hidden flex items-center justify-center" onclick="closeModalOnOutsideClick(event)">
+                <div class="bg-gray-900 p-6 rounded-lg w-[90%] max-w-xl relative border border-white/20">
+                    <!-- Close Button -->
+                    <button onclick="closeModal()" class="absolute top-3 right-3 text-white text-xl hover:text-red-500 hover:cursor-pointer">&times;</button>
+                    
+                    <!-- Content -->
+                    <h2 id="modalTitle" class="text-2xl font-bold text-blue-400 mb-2"></h2>
+                    <p id="modalUser" class="text-sm text-gray-400 mb-4"></p>
+                    <p id="modalContent" class="text-white"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- JS Code to Open Modal -->
+    <script>
+        function handleCardClick(el) {
+            const title = el.dataset.title;
+            const user = el.dataset.user;
+            const content = el.dataset.content;
+
+            document.getElementById('modalTitle').textContent = title;
+            document.getElementById('modalUser').textContent = user.startsWith('@') ? user : `@${user}`;
+            document.getElementById('modalContent').textContent = content;
+
+            document.getElementById('postModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('postModal').classList.add('hidden');
+        }
+
+        function closeModalOnOutsideClick(event) {
+            if (event.target.id === 'postModal') {
+                closeModal();
+            }
+        }
+    </script>
+
+
+</body>
+</html>

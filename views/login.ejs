@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Login | Postify</title>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-gray-800 text-white flex items-center justify-center flex-col gap-2">
+        <form action="/login" method="post" class="flex flex-col gap-4 w-96 p-6 bg-gray-900 rounded-md shadow-lg border border-gray-700 transition-transform">
+            <h1 class="text-2xl font-bold text-center">Login Your Account</h1>
+            <h2 class="text-lg font-bold text-center text-red-500" id="errorMsg">Invalid username or password!!</h2>
+            <script>
+                const urlParams = new URLSearchParams(window.location.search);
+                if (urlParams.get('error') === 'true') {
+                    const errorMsg = document.getElementById('errorMsg');
+                    errorMsg.classList.remove('hidden');
+                    setTimeout(() => {
+                        errorMsg.classList.add('hidden');
+                    }, 3000);
+                } else {
+                    document.getElementById('errorMsg').classList.add('hidden');
+                }
+            </script>
+            <input type="text" name="username" id="username" placeholder="Username" class="p-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" required autofocus oninvalid="this.setCustomValidity('Please enter a username.')" oninput="this.setCustomValidity('')">
+            <input type="password" name="password" id="password" placeholder="Password" class="p-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter a password.')" oninput="this.setCustomValidity('')">
+            <div class="w-full flex justify-center items-center gap-4">
+                <button type="submit" class="p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors hover:cursor-pointer">Login</button>
+                <a href="/register" class="p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors hover:cursor-pointer">New User?</a>
+                <!-- <script>
+                    const urlPara = new URLSearchParams(window.location.search);
+                    if (urlPara.get('error') === 'true') {
+                        document.write('<a href="/register" class="p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors hover:cursor-pointer">Register</a>');
+                    }
+                </script> -->
+            </div>
+        </form>
+    </div>
+    <script src="/javascript/myScripts.js"></script>
+</body>
+</html>

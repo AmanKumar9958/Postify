@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Edit Post | Postify</title>
+</head>
+<body>
+    <div class="w-full min-h-screen bg-gray-800 text-white flex items-center justify-center flex-col gap-2">
+        <form action="/update-post/<%= post._id %>" method="post" class="flex flex-col gap-4 w-96 p-6 bg-gray-900 rounded-md shadow-lg border border-gray-700 transition-transform">
+            <h1 class="text-2xl font-bold text-center">Edit Your Post</h1>
+            <input type="hidden" name="postId" value="<%= post._id %>">
+            <input type="text" name="title" value="<%= post.title %>" placeholder="Title" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+            <textarea name="content" rows="4" placeholder="Content" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition"><%= post.content %></textarea>
+            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-md transition duration-300 hover:cursor-pointer">Update Post</button>
+            <a href="/posts" class="text-center text-blue-400 hover:underline">Back to Posts</a>
+        </form>
+    </div>
+    <script src="/javascript/myScripts.js"></script>
+</body>
+</html>
