@@ -44,6 +44,32 @@ Coming soon...
 
 ## 📂 Project Structure
 
+project-root/
+│
+├── models/
+│ └── user.js
+│ └── post.js
+│
+├── routes/
+│ └── auth.js
+│ └── posts.js
+│
+├── views/
+│ ├── partials/
+│ │ └── navbar.ejs
+│ ├── login.ejs
+│ ├── register.ejs
+│ ├── posts.ejs
+│ └── myPosts.ejs
+│
+├── public/
+│ └── css/
+│ └── style.css
+│
+├── .env
+├── app.js
+├── package.json
+
 
 ---
 
