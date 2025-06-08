@@ -1,48 +1,52 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Profile | Postify</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
-</head>
-<body class="bg-gray-900 text-white font-sans">
+    </head>
+    <body class="bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white font-sans min-h-screen">
+
     <!-- Navbar -->
     <%- include('partials/navbar', { user: user }) %>
 
     <!-- Profile Section -->
-    <section class="flex items-center justify-center min-h-[60vh] py-12 px-6 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900">
-        <div class="bg-gray-800 rounded-xl shadow-lg p-8 max-w-md w-full space-y-6 animate-fadeInUp">
-            <div class="flex flex-col items-center space-y-2">
-                <div class="flex flex-col items-center space-y-3">
-                    <div class="bg-blue-600 rounded-full w-24 h-24 flex items-center justify-center text-4xl font-bold text-white mb-2">
-                        <img src="/uploads/avatar/<%= user.profilePicture %>" alt="User Avatar" class="rounded-full w-full h-full object-cover">
-                    </div>
-                    <div>
-                        <a href="/avatar" class="text-gray-400 border-2 border-gray-500 p-1 rounded-xl">Change you DP</a>
-                    </div>
-                </div>
-                <h2 class="text-2xl font-bold text-blue-400"><%= user.username %></h2>
-                <p class="text-gray-400">@<%= user.username %></p>
+    <section class="flex items-center justify-center py-16 px-6">
+        <div class="bg-[#1f1f1f] rounded-3xl shadow-2xl border border-white/10 p-8 w-full max-w-md space-y-8 animate-fadeInUp transition-all duration-500">
+        
+        <!-- Avatar & Name -->
+        <div class="flex flex-col items-center space-y-4">
+            <div class="w-28 h-28 rounded-full border-4 border-blue-600 shadow-md overflow-hidden">
+            <img src="/uploads/avatar/<%= user.profilePicture %>" alt="User Avatar" class="w-full h-full object-cover">
             </div>
-            <div class="space-y-2">
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-envelope text-blue-400"></i>
-                    <span class="text-gray-300"><%= user.email %></span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-cake-candles text-blue-400"></i>
-                    <span class="text-gray-300">Age: <%= user.age %></span>
-                </div>
-                <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-pen-to-square text-blue-400"></i>
-                    <a href="/myPosts"><span class="text-gray-300">My Posts: <%= posts.length %></span></a>
-                </div>
+            <a href="/avatar" class="text-sm text-gray-400 border border-gray-600 px-3 py-1 rounded-full hover:bg-gray-700 transition">Change DP</a>
+            <h2 class="text-2xl font-bold text-blue-400 tracking-wide"><%= user.username %></h2>
+            <p class="text-gray-400 text-sm">@<%= user.username %></p>
+        </div>
+
+        <!-- Info Section -->
+        <div class="space-y-4">
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+            <i class="fa-solid fa-envelope text-blue-500"></i>
+            <span><%= user.email %></span>
             </div>
-            <div class="flex justify-center mt-6">
-                <a href="/" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 rounded-lg transition-all duration-300">Back to Home</a>
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+            <i class="fa-solid fa-cake-candles text-blue-500"></i>
+            <span>Age: <%= user.age %></span>
             </div>
+            <div class="flex items-center gap-3 text-sm text-gray-300">
+            <i class="fa-solid fa-pen-to-square text-blue-500"></i>
+            <a href="/myPosts" class="hover:text-blue-400 transition">My Posts: <%= posts.length %></a>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="pt-4 flex justify-center">
+            <a href="/" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 text-sm font-medium rounded-full transition duration-300 shadow hover:shadow-md">Back to Home</a>
+        </div>
         </div>
     </section>
 
@@ -56,5 +60,6 @@
         animation: fadeInUp 0.8s ease-out forwards;
         }
     </style>
+
 </body>
 </html>

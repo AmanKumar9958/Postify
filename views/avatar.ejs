@@ -1,23 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Upload DP | Postify</title>
-</head>
-<body>
-    <div class="w-full min-h-screen bg-gray-800 text-white flex items-center justify-center flex-col gap-2">
-        <form action="/upload-avatar" method="post" enctype="multipart/form-data" class="flex flex-col gap-4 w-96 p-6 bg-gray-900 rounded-md shadow-lg border border-gray-700 transition-transform">
-            <h1 class="text-2xl font-bold text-center">Upload Your Avatar</h1>
-            <div class="flex flex-col gap-2">
-                <label for="avatar" class="text-gray-300">Choose an image:</label>
-                <input type="file" id="avatar" name="avatar" accept="image/*" class="file:cursor-pointer file:rounded-md file:border-0 file:bg-blue-600 file:text-white file:px-4 file:py-2 hover:file:bg-blue-700 transition-colors">
-            </div>
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-md transition-colors hover:cursor-pointer">Upload</button>
-            <a href="/profile" class="text-blue-400 hover:underline text-center">Back to Profile</a>
-        </form>
-    </div>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
+    </head>
+    <body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex items-center justify-center">
+
+    <form 
+        action="/upload-avatar" 
+        method="post" 
+        enctype="multipart/form-data" 
+        class="bg-[#1f1f1f] w-full max-w-md mx-auto rounded-2xl p-8 shadow-2xl border border-white/10 space-y-6 animate-fadeInUp"
+    >
+        <h1 class="text-3xl font-bold text-center text-blue-400">Upload Avatar</h1>
+
+        <div class="space-y-2">
+        <label for="avatar" class="block text-sm font-medium text-gray-300">Select an image</label>
+        <input 
+            type="file" 
+            id="avatar" 
+            name="avatar" 
+            accept="image/*" 
+            class="block w-full text-sm text-gray-200 
+                file:mr-4 file:py-2 file:px-4
+                file:rounded-md file:border-0
+                file:text-sm file:font-semibold
+                file:bg-blue-600 file:text-white
+                hover:file:bg-blue-700
+                transition-all duration-300 hover:cursor-pointer shadow-md hover:shadow-lg"
+        />
+        </div>
+
+        <button 
+        type="submit" 
+        class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-300 hover:cursor-pointer shadow-md hover:shadow-lg"
+        >
+        Upload
+        </button>
+
+        <div class="text-center">
+        <a href="/profile" class="text-blue-400 hover:underline text-sm">← Back to Profile</a>
+        </div>
+    </form>
+
+    <!-- Animations -->
+    <style>
+        @keyframes fadeInUp {
+        0% { opacity: 0; transform: translateY(20px); }
+        100% { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fadeInUp {
+        animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+
     <script src="/javascript/myScripts.js"></script>
 </body>
 </html>
