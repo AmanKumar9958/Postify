@@ -30,7 +30,11 @@ const userSchema = new mongoose.Schema({
         default: false
     },
     otp: String,
-    otpExpiresAt: Date
+    otpExpiresAt: Date,
+    profilePicture: {
+        type: String,
+        default: 'default_dp.png' // Default avatar image
+    }
 });
 
 

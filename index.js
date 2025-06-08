@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const multer = require("./Multer/multer");
 require('dotenv').config();
 
 // for otp..
@@ -334,6 +335,18 @@ app.get('/myPosts', async(req, res) => {
     }
 })
 
+// Route of showing a profile picture upload page..
+app.get('/avatar', isLoggedIn, (req, res) => {
+    res.render('avatar', { user: req.user });
+});
+
+// Route for uploading a profile picture..
+app.post('/upload-avatar', multer.single("avatar"), isLoggedIn, async(req, res) => {
+    let user = await userModel.findOne({email: req.user.email})
+    user.profilePicture = req.file.filename;
+    await user.save();
+    res.redirect('/profile');
+})
 // Our port..
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
