@@ -7,6 +7,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const multer = require("./Multer/multer");
+const crypto = require('crypto');
 require('dotenv').config();
 
 // for otp..
@@ -347,9 +348,66 @@ app.post('/upload-avatar', multer.single("avatar"), isLoggedIn, async(req, res) 
     await user.save();
     res.redirect('/profile');
 })
+
+// Route for showing forgot password page..
+app.get('/forgot-password', (req, res) => {
+    res.render('forgotPassword');
+});
+
+// Route for handling forgot password request..
+app.post('/forgot-password', async(req, res) => {
+    const { email } = req.body;
+    if (!email) return res.redirect('/forgot-password?error=missing_email');
+
+    const user = await userModel.findOne({ email });
+    if (!user) return res.redirect('/forgot-password?error=email_not_found');
+
+    // Generate token and expiry
+    const token = crypto.randomBytes(32).toString('hex');
+    user.resetPasswordToken = token;
+    user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+    await user.save();
+
+    // Send email with reset link
+    const resetLink = `http://localhost:3000/reset-password/${token}`;
+    await sendOTP(email, `Reset your password: ${resetLink}`);
+
+    res.render('forgotPassword', { message: 'Reset link sent to your email.' });
+});
+
+// Show reset password form
+app.get('/reset-password/:token', async (req, res) => {
+    const user = await userModel.findOne({
+        resetPasswordToken: req.params.token,
+        resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) return res.send('Invalid or expired token.');
+    res.render('resetPassword', { token: req.params.token });
+});
+
+
+// Handle new password submission
+app.post('/reset-password/:token', async (req, res) => {
+    const { password } = req.body;
+    const user = await userModel.findOne({
+        resetPasswordToken: req.params.token,
+        resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) return res.send('Invalid or expired token.');
+
+    // Hash new password
+    const hash = await bcrypt.hash(password, 10);
+    user.password = hash;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.redirect('/login');
+});
+
 // Our port..
 app.listen(3000, () => {
     console.log('Server is running on http://localhost:3000');
 });
 
-module.exports.handler = serverless(app);
+module.exports = app;
