@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://127.0.0.1:27017/miniProject');
+mongoose.connect('mongodb://127.0.0.1:27017/Postify');
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -34,7 +34,9 @@ const userSchema = new mongoose.Schema({
     profilePicture: {
         type: String,
         default: 'default_dp.png' // Default avatar image
-    }
+    },
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 });
 
 
