@@ -15,9 +15,55 @@
 
         <!-- Navigation Links -->
         <ul id="nav-links" class="hidden md:flex space-x-6 text-white items-center text-sm font-medium">
-            <li><a href="/" class="hover:text-blue-400 transition">Home</a></li>
-            <li><a href="/profile" class="hover:text-blue-400 transition">Profile</a></li>
-            <li><a href="/myPosts" class="hover:text-blue-400 transition">My Posts</a></li>
+            <li>
+                <a href="/" class="<%= activePage === 'home' ? 'text-blue-400' : '' %> hover:text-blue-400 transition">Home</a>
+            </li>
+            <li>
+                <a href="/posts" class="<%= activePage === 'posts' ? 'text-blue-400' : '' %> hover:text-blue-400 transition">Explore Posts</a>
+            </li>
+
+            <!-- Dropdown -->
+            <li class="relative group">
+                <!-- Toggle Button -->
+                <button class="flex items-center text-white hover:text-blue-400 transition focus:outline-none">
+                    Account <i class="fas fa-chevron-down ml-1"></i>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div class="absolute right-0 mt-2 w-40 bg-gray-800 rounded-md shadow-lg invisible opacity-0 group-hover:visible group-hover:opacity-100 flex-col z-50 transition-all duration-150">
+                    <ul class="text-sm text-white">
+                        <li>
+                            <a href="/profile" class="<%= activePage === 'profile' ? 'text-blue-400' : '' %> block px-4 py-2 hover:bg-gray-700">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/myPosts" class="<%= activePage === 'myPosts' ? 'text-blue-400' : '' %> block px-4 py-2 hover:bg-gray-700">My Posts</a>
+                        </li>
+                        <% if (user) { %>
+                            <li><a href="/logout" class="block px-4 py-2 hover:bg-red-600">Logout</a></li>
+                        <% } else { %>
+                            <li><a href="/login" class="block px-4 py-2 hover:bg-blue-600">Login</a></li>
+                        <% } %>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
+        <ul class="flex flex-col space-y-2 text-white font-medium">
+            <li>
+                <a href="/" class="<%= activePage === 'home' ? 'text-blue-400' : '' %> hover:text-blue-400 transition">Home</a>
+            </li>
+            <li>
+                <a href="/posts" class="<%= activePage === 'posts' ? 'text-blue-400' : '' %> hover:text-blue-400 transition">Explore Posts</a>
+            </li>
+            <li>
+                <a href="/profile" class="<%= activePage === 'profile' ? 'text-blue-400' : '' %> hover:text-blue-400 transition">Profile</a>
+            </li>
+            <li>
+                <a href="/myPosts" class="<%= activePage === 'myPosts' ? 'text-blue-400' : '' %> hover:text-blue-400 transition">My Posts</a>
+            </li>
             <% if (user) { %>
                 <li><a href="/logout" class="bg-red-500 px-3 py-1 rounded hover:bg-blue-700 transition">Logout</a></li>
             <% } else { %>
@@ -26,19 +72,6 @@
         </ul>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
-        <ul class="flex flex-col space-y-2 text-white font-medium">
-            <li><a href="/" class="hover:text-blue-400 transition">Home</a></li>
-            <li><a href="/profile" class="hover:text-blue-400 transition">Profile</a></li>
-            <li><a href="/myPosts" class="hover:text-blue-400 transition">My Posts</a></li>
-            <% if (user) { %>
-                <li><a href="/logout" class="bg-red-500 px-3 py-1 rounded hover:bg-blue-700 transition">Logout</a></li>
-            <% } else { %>
-                <li><a href="/login" class="bg-blue-600 px-3 py-1 rounded hover:bg-blue-700 transition">Login</a></li>
-            <% } %>
-        </ul>
-    </div>
 </nav>
 <script>
     const menuBtn = document.getElementById('menu-btn');
