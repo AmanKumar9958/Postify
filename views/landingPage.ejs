@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Postify - Share Your Voice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" type="image/png" href="/favicon.svg">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+</head>
+<body class="bg-gradient-to-br from-blue-50 via-white to-blue-100 min-h-screen flex flex-col">
+
+    <!-- Navbar -->
+    <nav class="flex items-center justify-between px-8 py-6 bg-white shadow-md">
+        <div class="flex items-center space-x-2 text-2xl font-bold text-blue-600">
+            <i class="fa-solid fa-pen-to-square"></i>
+            <span>Postify</span>
+        </div>
+        <div class="space-x-6">
+            <!-- Showing the logout button if user is logged in -->
+            <% if (user) { %>
+                <a href="/profile" class="text-gray-700 hover:text-blue-600 transition">Profile</a>
+                <a href="/logout" class="text-gray-700 hover:text-blue-600 transition">Logout</a>
+            <% } else { %>
+                <a href="/login" class="text-gray-700 hover:text-blue-600 transition">Login</a>
+                <a href="/register" class="text-gray-700 hover:text-blue-600 transition">Register</a>
+            <% } %>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="flex flex-1 flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-8 py-16">
+        <div class="md:w-1/2 mb-10 md:mb-0">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+                Share Your <span class="text-blue-600">Voice</span>.<br>
+                Inspire the <span class="text-blue-400">World</span>.
+            </h1>
+            <p class="text-lg text-gray-600 mb-8">
+                Postify is the modern platform to share your thoughts, stories, and ideas with a vibrant community. Join now and start your journey!
+            </p>
+            <a href="/login" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition">
+                Get Started
+            </a>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+            <img src="https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?auto=format&fit=crop&w=600&q=80"
+                alt="Postify Community" class="rounded-2xl shadow-lg w-full max-w-md">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="bg-white py-16">
+        <div class="max-w-5xl mx-auto px-8">
+            <h2 class="text-3xl font-bold text-center text-gray-900 mb-10">Why Postify?</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition">
+                    <i class="fa-solid fa-users text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Community Driven</h3>
+                    <p class="text-gray-600">Connect with like-minded people, follow your favorite creators, and grow your audience.</p>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition">
+                    <i class="fa-solid fa-pen-nib text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Easy Publishing</h3>
+                    <p class="text-gray-600">Write, edit, and publish posts effortlessly with our intuitive editor and tools.</p>
+                </div>
+                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition">
+                    <i class="fa-solid fa-bolt text-3xl text-blue-600 mb-4"></i>
+                    <h3 class="text-xl font-semibold mb-2">Real-Time Updates</h3>
+                    <p class="text-gray-600">Stay up-to-date with instant notifications and trending posts from the community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-center">
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to share your story?</h2>
+        <p class="mb-8 text-lg">Join Postify and become part of a growing creative community.</p>
+        <a href="/register" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg shadow hover:bg-blue-100 transition">
+            Sign Up Free
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white py-6 text-center text-gray

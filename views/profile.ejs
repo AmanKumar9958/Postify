@@ -2,55 +2,11 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile | Postify</title>
     <link rel="icon" type="image/x-icon" href="/favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
-    </head>
-    <body class="bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white font-sans min-h-screen">
-
-    <!-- Navbar -->
-    <%- include('partials/navbar', { user: user, activePage: 'profile' }) %>
-
-    <!-- Profile Section -->
-    <section class="flex items-center justify-center py-16 px-6">
-        <div class="bg-[#1f1f1f] rounded-3xl shadow-2xl border border-white/10 p-8 w-full max-w-md space-y-8 animate-fadeInUp transition-all duration-500">
-        
-        <!-- Avatar & Name -->
-        <div class="flex flex-col items-center space-y-4">
-            <div class="w-28 h-28 rounded-full border-4 border-blue-600 shadow-md overflow-hidden">
-            <img src="/uploads/avatar/<%= user.profilePicture %>" alt="User Avatar" class="w-full h-full object-cover">
-            </div>
-            <a href="/avatar" class="text-sm text-gray-400 border border-gray-600 px-3 py-1 rounded-full hover:bg-gray-700 transition">Change DP</a>
-            <h2 class="text-2xl font-bold text-blue-400 tracking-wide"><%= user.username %></h2>
-            <p class="text-gray-400 text-sm">@<%= user.username %></p>
-        </div>
-
-        <!-- Info Section -->
-        <div class="space-y-4">
-            <div class="flex items-center gap-3 text-sm text-gray-300">
-            <i class="fa-solid fa-envelope text-blue-500"></i>
-            <span><%= user.email %></span>
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-300">
-            <i class="fa-solid fa-cake-candles text-blue-500"></i>
-            <span>Age: <%= user.age %></span>
-            </div>
-            <div class="flex items-center gap-3 text-sm text-gray-300">
-            <i class="fa-solid fa-pen-to-square text-blue-500"></i>
-            <a href="/myPosts" class="hover:text-blue-400 transition">My Posts: <%= posts.length %></a>
-            </div>
-        </div>
-
-        <!-- Button -->
-        <div class="pt-4 flex justify-center">
-            <a href="/" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 text-sm font-medium rounded-full transition duration-300 shadow hover:shadow-md">Back to Home</a>
-        </div>
-        </div>
-    </section>
-
-    <!-- Animations -->
     <style>
         @keyframes fadeInUp {
         0% { opacity: 0; transform: translateY(20px); }
@@ -60,6 +16,50 @@
         animation: fadeInUp 0.8s ease-out forwards;
         }
     </style>
+    </head>
+    <body class="bg-gradient-to-tr from-gray-900 via-gray-800 to-gray-900 text-white font-sans min-h-screen">
+
+    <!-- Navbar -->
+    <%- include('partials/navbar', { user: user, activePage: 'profile' }) %>
+
+    <!-- Profile Section -->
+    <section class="flex items-center justify-center py-20 px-4">
+        <div class="w-full max-w-md bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 shadow-2xl space-y-8 animate-fadeInUp">
+
+        <!-- Avatar & Name -->
+        <div class="flex flex-col items-center space-y-4">
+            <div class="relative w-28 h-28 rounded-full overflow-hidden ring-4 ring-blue-500 shadow-xl">
+            <img src="/uploads/avatar/<%= user.profilePicture %>" alt="User Avatar" class="w-full h-full object-cover" />
+            </div>
+            <a href="/avatar" class="text-xs text-gray-400 border border-gray-600 px-3 py-1 rounded-full hover:bg-gray-700 transition duration-200">Change DP</a>
+            <h2 class="text-2xl font-semibold text-blue-400 tracking-wide"><%= user.username %></h2>
+            <p class="text-gray-400 text-sm">@<%= user.username %></p>
+        </div>
+
+        <!-- Info Section -->
+        <div class="space-y-3 text-sm text-gray-300">
+            <div class="flex items-center gap-3">
+            <i class="fa-solid fa-envelope text-blue-500"></i>
+            <span><%= user.email %></span>
+            </div>
+            <div class="flex items-center gap-3">
+            <i class="fa-solid fa-cake-candles text-blue-500"></i>
+            <span>Age: <%= user.age %></span>
+            </div>
+            <div class="flex items-center gap-3">
+            <i class="fa-solid fa-pen-to-square text-blue-500"></i>
+            <a href="/myPosts" class="hover:text-blue-400 transition">My Posts: <%= posts.length %></a>
+            </div>
+        </div>
+
+        <!-- Button -->
+        <div class="pt-4 flex justify-center">
+            <a href="/home" class="bg-blue-600 hover:bg-blue-700 px-6 py-2 text-sm font-medium rounded-full transition duration-300 shadow-lg hover:shadow-blue-500/30">
+            <i class="fa-solid fa-arrow-left mr-2"></i>Back to Home
+            </a>
+        </div>
+        </div>
+    </section>
 
 </body>
 </html>
