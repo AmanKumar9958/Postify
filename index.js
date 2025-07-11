@@ -11,10 +11,7 @@ const crypto = require('crypto');
 require('dotenv').config();
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.MONGO_URL, {
-    newUrlParser: true,
-    useUnifiedTopology: true,
-})
+mongoose.connect(process.env.MONGO_URL)
 .then(() => {
     console.log('Connected to MongoDB');
 })
