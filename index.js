@@ -9,6 +9,19 @@ const jwt = require('jsonwebtoken');
 const multer = require("./Multer/multer");
 const crypto = require('crypto');
 require('dotenv').config();
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URL, {
+    newUrlParser: true,
+    useUnifiedTopology: true,
+})
+.then(() => {
+    console.log('Connected to MongoDB');
+})
+.catch((err) => {
+    console.error('Error connecting to MongoDB:', err);
+})
+
 
 // for otp..
 const sendOTP = require('./OTP/sendOTP');
@@ -40,7 +53,7 @@ app.get('/', (req, res) => {
             res.clearCookie('token'); // Clear the cookie if verification fails
         }
     }
-    res.render('landingPage', { isLoggedIn, user: null, req });
+    res.render('landingPage', { isLoggedIn, user: null, req });     // there is some problem
 })
 
 // our home route..
@@ -423,8 +436,9 @@ app.post('/reset-password/:token', async (req, res) => {
 });
 
 // Our port..
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on ${PORT}`);
 });
 
 module.exports = app;
