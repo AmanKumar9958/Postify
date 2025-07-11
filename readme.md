@@ -6,7 +6,7 @@ Postify is a full-stack web application where users can sign up, log in, share p
 
 ## 🔗 Live Demo
 
-Coming soon...
+[Click Here to use: ](https://postify-d771.onrender.com/)
 
 ---
 
