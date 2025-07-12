@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 // for otp..
 const sendOTP = require('./OTP/sendOTP');
+const upload = require('./Multer/multer');
 
 // to render pages using EJS..
 app.set('view engine', 'ejs');
