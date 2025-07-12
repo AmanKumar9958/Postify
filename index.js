@@ -265,7 +265,7 @@ app.get('/posts', isLoggedIn, async(req, res) => {
 // Create Post route..
 app.post('/create-post', isLoggedIn, upload.single('image'), async(req, res) => {
     let { title, content } = req.body;
-    const image = req.file ? '/uploads/PostsImage/' + req.file.filename : null;
+    const image = req.file.filename; // Get the filename from the uploaded file
     let user = await userModel.findOne({email: req.user.email});
     let post = await postModel.create({
         user: user._id,
@@ -274,7 +274,7 @@ app.post('/create-post', isLoggedIn, upload.single('image'), async(req, res) => 
         image,
     })
     user.posts.push(post._id);
-    await user.save();
+    await user.save();  
     res.redirect('/posts')
 })
 
