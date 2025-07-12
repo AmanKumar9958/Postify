@@ -17,6 +17,16 @@ const storage = multer.diskStorage({
     }
 })
 
-const upload = multer({ storage: storage })
+// Set up disk for posts image for multer
+const PostImageStorage = multer.diskStorage({
+    destination: function (req, file, cb){
+        cb(null, 'public/uploads/PostsImage');
+    },
+    filename: function (req, file, cb){
+        cb(null, Date.now() + path.extname(file.originalname)); // Use current timestamp for unique file name
+    }
+});
+
+const upload = multer({ storage: storage, PostImageStorage: PostImageStorage })
 
 module.exports = upload;

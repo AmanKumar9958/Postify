@@ -258,17 +258,27 @@ app.get('/posts', isLoggedIn, async(req, res) => {
 });
 
 // Create Post route..
-app.post('/create-post', isLoggedIn, async(req, res) => {
+app.post('/create-post', isLoggedIn, upload.single('image'), async(req, res) => {
     let { title, content } = req.body;
+    const image = req.file ? '/uploads/PostsImage/' + req.file.filename : null;
     let user = await userModel.findOne({email: req.user.email});
     let post = await postModel.create({
         user: user._id,
         title,
-        content
+        content,
+        image,
     })
     user.posts.push(post._id);
     await user.save();
     res.redirect('/posts')
+})
+
+// Route for uploading a profile picture..
+app.post('/upload-avatar', multer.single("avatar"), isLoggedIn, async(req, res) => {
+    let user = await userModel.findOne({email: req.user.email})
+    user.profilePicture = req.file.filename;
+    await user.save();
+    res.redirect('/profile');
 })
 
 // Route for like/unlike..
@@ -368,14 +378,6 @@ app.get('/myPosts', async(req, res) => {
 app.get('/avatar', isLoggedIn, (req, res) => {
     res.render('avatar', { user: req.user });
 });
-
-// Route for uploading a profile picture..
-app.post('/upload-avatar', multer.single("avatar"), isLoggedIn, async(req, res) => {
-    let user = await userModel.findOne({email: req.user.email})
-    user.profilePicture = req.file.filename;
-    await user.save();
-    res.redirect('/profile');
-})
 
 // Route for showing forgot password page..
 app.get('/forgot-password', (req, res) => {

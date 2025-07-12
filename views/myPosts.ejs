@@ -43,7 +43,15 @@
                         </a>
                     </div>
                 </div>
-                <h2 class="text-2xl font-semibold text-blue-400 mb-2"><%= post.title %></h2>
+                <!-- Post Title -->
+                <h2 class="text-2xl font-semibold text-blue-400 mb-2">
+                    <%= post.title %>
+                </h2>
+                <!-- Post Image Content -->
+                <% if (post.image) { %>
+                    <img src="<%= post.image %>" alt="Post Image" class="rounded-xl mb-3 w-full max-h-64 object-cover">
+                <% } %>
+                <!-- Post Text Content -->
                 <p class="text-gray-300 mb-4"><%= post.content %></p>
                 <div class="flex items-center gap-2 text-gray-400">
                     <i class="fa-solid fa-heart text-red-500"></i>
