@@ -15,8 +15,8 @@
         .animate-fadeInUp { animation: fadeInUp 0.6s ease-out forwards; }
     </style>
     </head>
-    <body class="bg-gray-950 text-white font-sans">
 
+    <body class="bg-gray-950 text-white font-sans">
     <!-- Navbar -->
     <%- include('partials/navbar', { user: user, activePage: 'posts' }) %>
 
@@ -36,65 +36,69 @@
             </div>
         <% } else { %>
 
-            <!-- Error message (if any) -->
-            <h2 class="text-lg font-semibold text-center text-red-500 hidden" id="errorMsg">You are not a user</h2>
-            <script>
+        <!-- Error Message -->
+        <h2 class="text-lg font-semibold text-center text-red-500 hidden" id="errorMsg">You are not a user</h2>
+        <script>
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('error') === 'not_authorized' || urlParams.get('error') === 'you_are_not_user') {
-                const errorMsg = document.getElementById('errorMsg');
-                errorMsg.classList.remove('hidden');
-                setTimeout(() => errorMsg.classList.add('hidden'), 3000);
+            const errorMsg = document.getElementById('errorMsg');
+            errorMsg.classList.remove('hidden');
+            setTimeout(() => errorMsg.classList.add('hidden'), 3000);
             }
-            </script>
+        </script>
 
-            <!-- Posts Grid -->
-            <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- Posts Grid -->
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             <% posts.reverse().forEach(post => { %>
-                <div 
+            <div 
                 class="bg-gray-900/70 border border-white/10 rounded-xl p-5 shadow-md hover:shadow-lg transition-all hover:scale-[1.03] duration-300 cursor-pointer backdrop-blur"
                 data-title="<%= post.title.replace(/"/g, '&quot;') %>"
                 data-user="<%= post.user ? post.user.username.replace(/"/g, '&quot;') : '[deleted user]' %>"
                 data-content="<%= post.content.replace(/"/g, '&quot;') %>"
+                <% if (post.image) { %> data-image="<%= post.image %>" <% } %>
                 onclick="handleCardClick(this)"
-                >
+            >
                 <% if (post.user) { %>
-                    <p class="text-blue-400 text-sm mb-1">@<%= post.user.username %></p>
+                <p class="text-blue-400 text-sm mb-1">@<%= post.user.username %></p>
                 <% } else { %>
-                    <p class="text-red-400 text-sm italic mb-1">[deleted user]</p>
+                <p class="text-red-400 text-sm italic mb-1">[deleted user]</p>
                 <% } %>
+
                 <h2 class="text-white font-bold text-lg truncate"><%= post.title %></h2>
+
                 <% if (post.image) { %>
-                    <img src="<%= post.image %>" alt="Post Image" class="rounded-xl mb-3 w-full max-h-64 object-cover" />
+                <img src="<%= post.image %>" alt="Post Image" class="rounded-xl mb-3 w-full max-h-64 object-cover" />
                 <% } %>
+
                 <p class="text-gray-300 text-sm mt-2 line-clamp-2"><%= post.content %></p>
 
                 <!-- Like & Actions -->
                 <div class="flex justify-between items-center mt-4 text-sm">
-                    <div class="text-red-500 flex items-center gap-1" onclick="event.stopPropagation();">
+                <div class="text-red-500 flex items-center gap-1" onclick="event.stopPropagation();">
                     <% const hasLiked = post.likes.includes(user._id); %>
                     <a href="/like/<%= post._id %>">
-                        <% if (!hasLiked) { %>
+                    <% if (!hasLiked) { %>
                         <i class="fa-regular fa-heart"></i>
-                        <% } else { %>
+                    <% } else { %>
                         <i class="fa-solid fa-heart" style="color: #ff0000;"></i>
-                        <% } %>
+                    <% } %>
                     </a>
                     <span><%= post.likes.length %></span>
-                    </div>
-                    <% if(post.user && post.user._id.toString() === user._id.toString()){ %>
+                </div>
+                <% if (post.user && post.user._id.toString() === user._id.toString()) { %>
                     <div class="flex items-center gap-3">
-                        <a href="/delete-post/<%= post._id %>" onclick="event.stopPropagation();" class="text-gray-400 hover:text-red-500">
+                    <a href="/delete-post/<%= post._id %>" onclick="event.stopPropagation();" class="text-gray-400 hover:text-red-500">
                         <i class="fa-solid fa-trash"></i>
-                        </a>
-                        <a href="/edit-post/<%= post._id %>" onclick="event.stopPropagation();" class="text-gray-400 hover:text-blue-500">
-                            <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
+                    </a>
+                    <a href="/edit-post/<%= post._id %>" onclick="event.stopPropagation();" class="text-gray-400 hover:text-blue-500">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                    </a>
                     </div>
-                    <% } %>
+                <% } %>
                 </div>
-                </div>
-            <% }) %>
             </div>
+            <% }) %>
+        </div>
         <% } %>
 
         <!-- Modal -->
@@ -103,12 +107,12 @@
             <button onclick="closeModal()" class="absolute top-3 right-4 text-xl hover:text-red-500 hover:cursor-pointer">&times;</button>
             <h2 id="modalTitle" class="text-2xl font-bold text-blue-400 mb-2"></h2>
             <p id="modalUser" class="text-sm text-gray-400 mb-3"></p>
+            <img src="" alt="Post Image" id="modalImage" class="rounded-xl mb-3 w-full max-h-64 object-cover hidden" />
             <p id="modalContent" class="text-white text-base leading-relaxed whitespace-pre-wrap"></p>
             </div>
         </div>
         </div>
     </section>
-
 
     <!-- Modal JS -->
     <script>
@@ -116,10 +120,19 @@
         const title = el.dataset.title;
         const user = el.dataset.user;
         const content = el.dataset.content;
+        const image = el.dataset.image;
 
         document.getElementById('modalTitle').textContent = title;
         document.getElementById('modalUser').textContent = user.startsWith('@') ? user : `@${user}`;
         document.getElementById('modalContent').textContent = content;
+
+        const modalImage = document.getElementById('modalImage');
+        if (image) {
+            modalImage.src = image;
+            modalImage.classList.remove('hidden');
+        } else {
+            modalImage.classList.add('hidden');
+        }
 
         document.getElementById('postModal').classList.remove('hidden');
         }
