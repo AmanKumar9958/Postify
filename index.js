@@ -49,7 +49,9 @@ app.get('/', async (req, res) => {
             res.clearCookie('token');
         }
     }
-    res.render('landingPage', { user, req });
+    const totalUsers = await userModel.countDocuments();
+    const totalPosts = await postModel.countDocuments();
+    res.render('landingPage', { user, req, totalUsers, totalPosts });
 })
 
 // our home route..
