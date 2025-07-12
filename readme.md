@@ -20,6 +20,7 @@ Postify is a full-stack web application where users can sign up, log in, share p
 - ✅ Modal for viewing post details
 - ✅ Only post owners can see Edit & Delete buttons
 - ✅ Alerts for unauthorized access (auto-hide after few seconds)
+- ✅ Add Image in your posts
 
 ---
 
