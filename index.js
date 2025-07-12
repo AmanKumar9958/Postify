@@ -265,18 +265,23 @@ app.get('/posts', isLoggedIn, async(req, res) => {
 
 // Create Post route..
 app.post('/create-post', isLoggedIn, uploadCloudinary.single('image'), async(req, res) => {
-    let { title, content } = req.body;
-    const image = req.file ? req.file.path : null; // Cloudinary gives public URL here
-    let user = await userModel.findOne({email: req.user.email});
-    let post = await postModel.create({
-        user: user._id,
-        title,
-        content,
-        image,
-    })
-    user.posts.push(post._id);
-    await user.save();  
-    res.redirect('/posts')
+    try{
+        let { title, content } = req.body;
+        const image = req.file ? req.file.path : null; // Cloudinary gives public URL here
+        let user = await userModel.findOne({email: req.user.email});
+        let post = await postModel.create({
+            user: user._id,
+            title,
+            content,
+            image,
+        })
+        user.posts.push(post._id);
+        await user.save();  
+        res.redirect('/posts')
+    } catch(err){
+        console.error("Post creation error:", err);
+        res.status(500).send("Internal Server Error");
+    }
 })
 
 // Route for uploading a profile picture..
