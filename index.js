@@ -259,7 +259,7 @@ app.get('/posts', isLoggedIn, async(req, res) => {
 });
 
 // Create Post route..
-app.post('/create-post', isLoggedIn, upload.single('image'), async(req, res) => {
+app.post('/create-post', isLoggedIn, multer.single('image'), async(req, res) => {
     let { title, content } = req.body;
     const image = req.file ? '/uploads/PostsImage/' + req.file.filename : null;
     let user = await userModel.findOne({email: req.user.email});
