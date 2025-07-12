@@ -37,20 +37,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // our landing page route..
-app.get('/', (req, res) => {
-    // Check if the user is logged in by checking the token cookie..
+app.get('/', async (req, res) => {
     const token = req.cookies.token;
-    let isLoggedIn = false;
-    if(token){
-        try{
-            jwt.verify(token, "secretKey");
-            isLoggedIn = true;
-        } catch(err) {
+    let user = null;
+    if (token) {
+        try {
+            const data = jwt.verify(token, "secretKey");
+            user = await userModel.findById(data.userid);
+        } catch (err) {
             console.error(err);
-            res.clearCookie('token'); // Clear the cookie if verification fails
+            res.clearCookie('token');
         }
     }
-    res.render('landingPage', { isLoggedIn, user: null, req });     // there is some problem
+    res.render('landingPage', { user, req });
 })
 
 // our home route..
