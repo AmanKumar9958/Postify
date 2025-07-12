@@ -73,13 +73,17 @@ app.get('/home', isLoggedIn, async(req, res) => {
             return res.redirect('/login');
         }
     }
+    const totalUsers = await userModel.countDocuments();
+    const totalPosts = await postModel.countDocuments();
     const posts = await postModel.find().populate('user', 'username').sort({ createdAt: -1 });
 
     res.render('home', {
         isLoggedIn,
         user,
         posts,
-        req
+        req,
+        totalUsers,
+        totalPosts
     });
 });
 
