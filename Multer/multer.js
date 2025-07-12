@@ -1,9 +1,10 @@
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
+const { storage } = require('../Cloudinary/cloudinary');
 
 // Set up disk configuration for multer
-const storage = multer.diskStorage({
+const DP = multer.diskStorage({
     // set the destination to the uploads directory
     destination: function (req, file, cb) {
         cb(null, './public/uploads/avatar') // Ensure this path exists
@@ -17,19 +18,7 @@ const storage = multer.diskStorage({
     }
 })
 
-// Set up disk for posts image for multer
-const PostImageStorage = multer.diskStorage({
-    destination: function (req, file, cb){
-        cb(null, './public/uploads/PostsImage'); // Ensure this path exists
-    },
-    filename: function (req, file, cb){
-        crypto.randomBytes(12, (err, name) => {
-            const fileName = name.toString("hex")+path.extname(file.originalname);  // Generate a random file name
-            cb(null, fileName) // Use the random name for the file
-        })
-    }
-});
 
-const upload = multer({ storage: storage, storage: PostImageStorage })
+const upload = multer({ storage: storage, storage: DP })
 
 module.exports = upload;

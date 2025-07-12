@@ -3,3 +3,10 @@ User passing error in line 43 of index.js
 Get started button problem from Landing page when loggedIn. ✔
 
 Landing page navbar button problem  ✔
+
+
+
+
+
+
+// Set up disk for posts image for multer
