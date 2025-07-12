@@ -1,9 +1,9 @@
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto');
-const { storage } = require('../Cloudinary/cloudinary');
+const { storage: cloudinaryStorage } = require('../Cloudinary/cloudinary');
 
-// Set up disk configuration for multer
+// Set up disk configuration for multer for uploading user profile images
 const DP = multer.diskStorage({
     // set the destination to the uploads directory
     destination: function (req, file, cb) {
@@ -19,6 +19,7 @@ const DP = multer.diskStorage({
 })
 
 
-const upload = multer({ storage: storage, storage: DP })
+const uploadCloudinary = multer({ storage: cloudinaryStorage }); // For posts
+const uploadLocal = multer({ storage: DP }); // For profile pics
 
-module.exports = upload;
+module.exports = { uploadCloudinary, uploadLocal };

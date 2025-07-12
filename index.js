@@ -22,7 +22,8 @@ mongoose.connect(process.env.MONGO_URL)
 
 // for otp..
 const sendOTP = require('./OTP/sendOTP');
-const upload = require('./Multer/multer');
+const { uploadCloudinary } = require('./Multer/multer');
+const { uploadLocal } = require('./Multer/multer');
 
 // to render pages using EJS..
 app.set('view engine', 'ejs');
@@ -263,7 +264,7 @@ app.get('/posts', isLoggedIn, async(req, res) => {
 });
 
 // Create Post route..
-app.post('/create-post', isLoggedIn, upload.single('image'), async(req, res) => {
+app.post('/create-post', isLoggedIn, uploadCloudinary.single('image'), async(req, res) => {
     let { title, content } = req.body;
     const image = req.file ? req.file.path : null; // Cloudinary gives public URL here
     let user = await userModel.findOne({email: req.user.email});
@@ -279,7 +280,7 @@ app.post('/create-post', isLoggedIn, upload.single('image'), async(req, res) => 
 })
 
 // Route for uploading a profile picture..
-app.post('/upload-avatar', multer.single("avatar"), isLoggedIn, async(req, res) => {
+app.post('/upload-avatar', uploadLocal.single("avatar"), isLoggedIn, async(req, res) => {
     let user = await userModel.findOne({email: req.user.email})
     user.profilePicture = req.file.filename;
     await user.save();
