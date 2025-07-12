@@ -20,13 +20,16 @@ const storage = multer.diskStorage({
 // Set up disk for posts image for multer
 const PostImageStorage = multer.diskStorage({
     destination: function (req, file, cb){
-        cb(null, 'public/uploads/PostsImage');
+        cb(null, './public/uploads/PostsImage'); // Ensure this path exists
     },
     filename: function (req, file, cb){
-        cb(null, Date.now() + path.extname(file.originalname)); // Use current timestamp for unique file name
+        crypto.randomBytes(12, (err, name) => {
+            const fileName = name.toString("hex")+path.extname(file.originalname);  // Generate a random file name
+            cb(null, fileName) // Use the random name for the file
+        })
     }
 });
 
-const upload = multer({ storage: storage, PostImageStorage: PostImageStorage })
+const upload = multer({ storage: storage, storage: PostImageStorage })
 
 module.exports = upload;

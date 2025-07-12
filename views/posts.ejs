@@ -63,6 +63,9 @@
                     <p class="text-red-400 text-sm italic mb-1">[deleted user]</p>
                 <% } %>
                 <h2 class="text-white font-bold text-lg truncate"><%= post.title %></h2>
+                <% if (post.image) { %>
+                    <img src="<%= post.image %>" alt="Post Image" class="rounded-xl mb-3 w-full max-h-64 object-cover" />
+                <% } %>
                 <p class="text-gray-300 text-sm mt-2 line-clamp-2"><%= post.content %></p>
 
                 <!-- Like & Actions -->
