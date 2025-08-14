@@ -410,7 +410,7 @@ app.post('/forgot-password', async(req, res) => {
     await user.save();
 
     // Send email with reset link
-    const resetLink = `http://localhost:3000/reset-password/${token}`;
+    const resetLink = `https://postify-d771.onrender.com/reset-password/${token}`;
     await sendOTP(email, `Reset your password: ${resetLink}`);
 
     res.render('forgotPassword', { message: 'Reset link sent to your email.' });
