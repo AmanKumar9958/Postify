@@ -6,36 +6,90 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Register | Postify</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        @keyframes fadeInUp { 0% { opacity: 0; transform: translateY(12px);} 100% { opacity: 1; transform: translateY(0);} }
+        @keyframes slideIn { 0% { opacity: 0; transform: translateX(-12px);} 100% { opacity: 1; transform: translateX(0);} }
+        .animate-fadeInUp { animation: fadeInUp .6s ease-out both; }
+        .animate-slideIn { animation: slideIn .7s ease-out both; }
+    </style>
 </head>
-<body>
-    <div class="w-full min-h-screen bg-gray-800 text-white flex items-center justify-center flex-col gap-2">
-        <form action="/register" method="post" class="flex flex-col gap-4 w-96 p-6 bg-gray-900 rounded-md shadow-lg border border-gray-700 transition-transform">
-            <h1 class="text-2xl font-bold text-center">Create User Account</h1>
-            <h2 class="text-lg font-bold text-center text-red-500">User already exists</h2>
-            <script>
-                const urlParams = new URLSearchParams(window.location.search);
-                if (urlParams.get('error') === 'user_exists') {
-                    const errorMsg = document.querySelector('h2');
-                    errorMsg.classList.remove('hidden');
-                    setTimeout(() => {
-                        errorMsg.classList.add('hidden');
-                    }, 3000);
-                } else {
-                    document.querySelector('h2').classList.add('hidden');
-                }
-            </script>
-            <input type="text" name="username" id="username" placeholder="Username" class="p-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" required autofocus oninvalid="this.setCustomValidity('Please enter a username.')" oninput="this.setCustomValidity('')">
-            <input type="email" name="email" id="email" placeholder="Email" class="p-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter a valid email address.')" oninput="this.setCustomValidity('')">
-            <input type="password" name="password" id="password" placeholder="Password" class="p-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter a password.')" oninput="this.setCustomValidity('')">
-            <input type="text" name="age" id="age" placeholder="Age" class="p-2 rounded-md bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter your age.')" oninput="this.setCustomValidity('')">
-            <button type="submit" class="p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors hover:cursor-pointer">Create Account</button>
-            <script>
-                const urlPara = new URLSearchParams(window.location.search);
-                if (urlParams.get('error') === 'user_exists') {
-                    document.write('<a href="/" class="p-2 bg-blue-600 rounded-md hover:bg-blue-700 transition-colors hover:cursor-pointer text-center">Login</a>');
-                }
-            </script>
-        </form>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-blue-900 text-white flex items-center justify-center p-4">
+    <div class="w-full max-w-5xl grid md:grid-cols-2 bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl overflow-hidden shadow-2xl">
+        <!-- Left visual panel -->
+        <div class="relative hidden md:block">
+            <img alt="Join Postify" class="absolute inset-0 w-full h-full object-cover"
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop"/>
+            <div class="absolute inset-0 bg-gradient-to-tr from-black/60 to-blue-900/40"></div>
+            <div class="relative h-full p-10 flex flex-col justify-end gap-2 animate-slideIn">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-blue-300 drop-shadow">Create your account</h2>
+                <p class="text-blue-100/90">Be part of the community—share your journey and learn with others.</p>
+            </div>
+        </div>
+
+        <!-- Right form panel -->
+        <div class="p-8 md:p-10">
+            <form action="/register" method="post" class="space-y-4 animate-fadeInUp">
+                <h1 class="text-3xl font-bold">Register</h1>
+                <p class="text-gray-300">Already have an account? <a href="/login" class="text-blue-400 hover:text-blue-300 underline">Login</a></p>
+
+                <h2 id="registerError" class="text-sm font-semibold text-red-400 hidden">User already exists</h2>
+                <script>
+                    (function(){
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const errorMsg = document.getElementById('registerError');
+                        if (!errorMsg) return;
+                        if (urlParams.get('error') === 'user_exists') {
+                            errorMsg.classList.remove('hidden');
+                            setTimeout(() => errorMsg.classList.add('hidden'), 3000);
+                        } else {
+                            errorMsg.classList.add('hidden');
+                        }
+                    })();
+                </script>
+
+                <div>
+                    <label for="username" class="block text-sm mb-1">Username</label>
+                    <input type="text" name="username" id="username" placeholder="Username" class="w-full p-3 rounded-lg bg-gray-800/80 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors" required autofocus oninvalid="this.setCustomValidity('Please enter a username.')" oninput="this.setCustomValidity('')">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm mb-1">Email</label>
+                    <input type="email" name="email" id="email" placeholder="Email" class="w-full p-3 rounded-lg bg-gray-800/80 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter a valid email address.')" oninput="this.setCustomValidity('')">
+                </div>
+
+                <div class="relative">
+                    <label for="password" class="block text-sm mb-1">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Password" class="w-full p-3 pr-10 rounded-lg bg-gray-800/80 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter a password.')" oninput="this.setCustomValidity('')">
+                    <button type="button" id="togglePasswordRegister" aria-label="Show password" class="absolute bottom-3.5 right-3 text-gray-300 hover:text-white cursor-pointer">
+                        <svg class="eye h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M1.5 12s3.75-7.5 10.5-7.5S22.5 12 22.5 12 18.75 19.5 12 19.5 1.5 12 1.5 12z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        <svg class="eye-off h-5 w-5 hidden" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M10.584 10.59a3 3 0 104.827 3.41M9.88 4.84A10.451 10.451 0 0112 4.5c6.75 0 10.5 7.5 10.5 7.5a18.97 18.97 0 01-4.438 5.513M6.228 6.228A18.968 18.968 0 001.5 12s3.75 7.5 10.5 7.5a10.45 10.45 0 004.007-.773"></path></svg>
+                    </button>
+                </div>
+
+                <div>
+                    <label for="age" class="block text-sm mb-1">Age</label>
+                    <input type="text" name="age" id="age" placeholder="Age" class="w-full p-3 rounded-lg bg-gray-800/80 border border-white/10 text-white focus:outline-none focus:ring-2 focus:ring-blue-500" required oninvalid="this.setCustomValidity('Please enter your age.')" oninput="this.setCustomValidity('')">
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 rounded-xl shadow-lg hover:shadow-blue-500/30 transition-colors font-semibold">Create Account</button>
+            </form>
+        </div>
     </div>
+
+    <script>
+        function toggleVisibility(input, btn){
+            const isHidden = input.type === 'password';
+            input.type = isHidden ? 'text' : 'password';
+            btn.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+            const eye = btn.querySelector('.eye');
+            const eyeOff = btn.querySelector('.eye-off');
+            if (eye && eyeOff) { eye.classList.toggle('hidden'); eyeOff.classList.toggle('hidden'); }
+        }
+        const toggleBtnRegister = document.getElementById('togglePasswordRegister');
+        const passwordInputRegister = document.getElementById('password');
+        if (toggleBtnRegister && passwordInputRegister) {
+            toggleBtnRegister.addEventListener('click', () => toggleVisibility(passwordInputRegister, toggleBtnRegister));
+        }
+    </script>
 </body>
 </html>

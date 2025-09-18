@@ -28,9 +28,11 @@
 
         <!-- Avatar & Name -->
         <div class="flex flex-col items-center space-y-4">
-            <div class="relative w-28 h-28 rounded-full overflow-hidden ring-4 ring-blue-500 shadow-xl">
-            <img src="/uploads/avatar/<%= user.profilePicture %>" alt="User Avatar" class="w-full h-full object-cover" />
-            </div>
+          <div class="relative w-28 h-28 rounded-full overflow-hidden ring-4 ring-blue-500 shadow-xl bg-gray-800">
+          <img src="/uploads/avatar/<%= user.profilePicture %>" alt="User Avatar" class="w-full h-full object-cover"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='/uploads/avatar/default_dp.png';" />
+          </div>
             <a href="/avatar" class="text-xs text-gray-400 border border-gray-600 px-3 py-1 rounded-full hover:bg-gray-700 transition duration-200">Change DP</a>
             <h2 class="text-2xl font-semibold text-blue-400 tracking-wide"><%= user.username %></h2>
             <p class="text-gray-400 text-sm">@<%= user.username %></p>

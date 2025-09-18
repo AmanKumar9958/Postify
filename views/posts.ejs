@@ -67,7 +67,8 @@
                 <h2 class="text-white font-bold text-lg truncate"><%= post.title %></h2>
 
                 <% if (post.image) { %>
-                <img src="<%= post.image %>" alt="Post Image" class="rounded-xl mb-3 w-full max-h-64 object-cover" />
+                <% const gridImg = post.image.includes('/upload/') ? post.image.replace('/upload/', '/upload/f_auto,q_auto/') : post.image; %>
+                <img src="<%= gridImg %>" alt="Post Image" class="rounded-xl mb-3 w-full h-auto max-h-96 object-contain bg-gray-800" loading="lazy" />
                 <% } %>
 
                 <p class="text-gray-300 text-sm mt-2 line-clamp-2"><%= post.content %></p>
@@ -107,7 +108,7 @@
             <button onclick="closeModal()" class="absolute top-3 right-4 text-xl hover:text-red-500 hover:cursor-pointer">&times;</button>
             <h2 id="modalTitle" class="text-2xl font-bold text-blue-400 mb-2"></h2>
             <p id="modalUser" class="text-sm text-gray-400 mb-3"></p>
-            <img src="" alt="Post Image" id="modalImage" class="rounded-xl mb-3 w-full max-h-64 object-cover hidden" />
+            <img src="" alt="Post Image" id="modalImage" class="rounded-xl mb-3 w-full max-h-[75vh] object-contain bg-black hidden" />
             <p id="modalContent" class="text-white text-base leading-relaxed whitespace-pre-wrap"></p>
             </div>
         </div>
@@ -120,14 +121,15 @@
         const title = el.dataset.title;
         const user = el.dataset.user;
         const content = el.dataset.content;
-        const image = el.dataset.image;
+    const imageRaw = el.dataset.image;
 
         document.getElementById('modalTitle').textContent = title;
         document.getElementById('modalUser').textContent = user.startsWith('@') ? user : `@${user}`;
         document.getElementById('modalContent').textContent = content;
 
         const modalImage = document.getElementById('modalImage');
-        if (image) {
+        if (imageRaw) {
+            const image = imageRaw.includes('/upload/') ? imageRaw.replace('/upload/', '/upload/f_auto,q_auto/') : imageRaw;
             modalImage.src = image;
             modalImage.classList.remove('hidden');
         } else {
