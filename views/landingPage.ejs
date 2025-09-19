@@ -8,6 +8,7 @@
     <link rel="alternate icon" type="image/png" href="/favicon.svg">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/app.css">
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
 </head>
@@ -32,7 +33,7 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="flex flex-1 flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-8 py-16">
+    <section class="flex flex-1 flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-8 py-16" data-animate="scale">
         <div class="md:w-1/2 mb-10 md:mb-0">
             <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
                 Share Your <span class="text-blue-600">Voice</span>.<br>
@@ -41,7 +42,7 @@
             <p class="text-lg text-gray-600 mb-8">
                 Postify is the modern platform to share your thoughts, stories, and ideas with a vibrant community. Join now and start your journey!
             </p>
-            <a href="<%= user ? '/posts' : '/login' %>" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition">
+            <a href="<%= user ? '/posts' : '/login' %>" class="inline-block bg-blue-600 text-white px-8 py-3 rounded-lg text-lg font-semibold shadow hover:bg-blue-700 transition btn-glow" data-ripple>
                 Get Started
             </a>
         </div>
@@ -52,21 +53,21 @@
     </section>
 
     <!-- Features Section -->
-    <section class="bg-white py-16">
+    <section class="bg-white py-16" data-animate>
         <div class="max-w-5xl mx-auto px-8">
             <h2 class="text-3xl font-bold text-center text-gray-900 mb-10">Why Postify?</h2>
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition">
+                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition card-raise" data-tilt>
                     <i class="fa-solid fa-users text-3xl text-blue-600 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Community Driven</h3>
                     <p class="text-gray-600">Connect with like-minded people, follow your favorite creators, and grow your audience.</p>
                 </div>
-                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition">
+                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition card-raise" data-tilt>
                     <i class="fa-solid fa-pen-nib text-3xl text-blue-600 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Easy Publishing</h3>
                     <p class="text-gray-600">Write, edit, and publish posts effortlessly with our intuitive editor and tools.</p>
                 </div>
-                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition">
+                <div class="bg-blue-50 rounded-xl p-8 shadow hover:shadow-lg transition card-raise" data-tilt>
                     <i class="fa-solid fa-bolt text-3xl text-blue-600 mb-4"></i>
                     <h3 class="text-xl font-semibold mb-2">Real-Time Updates</h3>
                     <p class="text-gray-600">Stay up-to-date with instant notifications and trending posts from the community.</p>
@@ -76,10 +77,10 @@
     </section>
 
     <!-- Call to Action -->
-    <section class="py-16 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-center">
+    <section class="py-16 bg-gradient-to-r from-blue-600 to-blue-400 text-white text-center" data-animate>
         <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to share your story?</h2>
         <p class="mb-8 text-lg">Join Postify and become part of a growing creative community.</p>
-        <a href="/register" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg shadow hover:bg-blue-100 transition">
+    <a href="/register" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold text-lg shadow hover:bg-blue-100 transition btn-glow" data-ripple>
             Sign Up Free
         </a>
     </section>
@@ -87,5 +88,6 @@
     <!-- Footer -->
     <%- include('partials/footer', { totalUsers, totalPosts }) %>
 
+    <script src="/js/ui.js" defer></script>
     <!-- Footer -->
     <footer class="bg-white py-6 text-center text-gray

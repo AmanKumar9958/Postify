@@ -6,11 +6,12 @@
     <title>Verify OTP | Postify</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 <body class="bg-gray-800 text-white min-h-screen flex flex-col items-center justify-center">
 
     <form action="/verifyOtp" method="POST"
-        class="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8 space-y-6 transition-transform">
+    class="w-full max-w-md bg-gray-900 border border-gray-700 rounded-lg shadow-lg p-8 space-y-6 transition-transform card-raise" data-animate="scale">
 
         <input type="hidden" name="email" value="<%= email %>">
 
@@ -31,6 +32,7 @@
         <!-- <p class="text-center text-sm text-gray-400">Didn't receive it? <a href="/resend-otp" class="text-blue-400 hover:underline">Resend OTP</a></p> -->
     </form>
 
+    <script src="/js/ui.js" defer></script>
     <script src="/javascript/myScripts.js"></script>
 </body>
 </html>

@@ -6,6 +6,7 @@
     <title>Upload DP | Postify</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" />
     </head>
     <body class="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans flex items-center justify-center">
@@ -14,7 +15,7 @@
         action="/upload-avatar" 
         method="post" 
         enctype="multipart/form-data" 
-        class="bg-[#1f1f1f] w-full max-w-md mx-auto rounded-2xl p-8 shadow-2xl border border-white/10 space-y-6 animate-fadeInUp"
+    class="bg-[#1f1f1f] w-full max-w-md mx-auto rounded-2xl p-8 shadow-2xl border border-white/10 space-y-6 card-raise" data-animate="scale"
     >
         <h1 class="text-3xl font-bold text-center text-blue-400">Upload Avatar</h1>
 
@@ -48,16 +49,9 @@
     </form>
 
     <!-- Animations -->
-    <style>
-        @keyframes fadeInUp {
-        0% { opacity: 0; transform: translateY(20px); }
-        100% { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fadeInUp {
-        animation: fadeInUp 0.8s ease-out forwards;
-        }
-    </style>
+    
 
+    <script src="/js/ui.js" defer></script>
     <script src="/javascript/myScripts.js"></script>
 </body>
 </html>

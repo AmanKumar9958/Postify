@@ -1,9 +1,9 @@
-<nav class="bg-gray-800 shadow-md sticky top-0 z-50">
+<nav class="bg-gray-800/95 shadow-md backdrop-blur supports-[backdrop-filter]:backdrop-blur sticky top-0 z-50" data-animate="slide-right">
     <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         
         <!-- Brand -->
-        <div class="text-2xl font-bold text-blue-500 hover:scale-105 duration-300">
-            <a href="/"><i class="fa-solid fa-pen-to-square"></i> Postify</a>
+        <div class="text-2xl font-bold hover:scale-105 duration-300">
+            <a href="/" class="brand-shimmer"><i class="fa-solid fa-pen-to-square"></i> Postify</a>
         </div>
 
         <!-- Hamburger Button -->
@@ -76,8 +76,7 @@
 <script>
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
-
-    menuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
+    if (menuBtn && mobileMenu) {
+        menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    }
 </script>

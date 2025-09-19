@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="/css/app.css">
     <title>Edit Post | Postify</title>
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
 </head>
 <body>
-    <div class="w-full min-h-screen bg-gray-800 text-white flex items-center justify-center flex-col gap-2">
-        <form action="/update-post/<%= post._id %>" method="post" class="flex flex-col gap-4 w-96 p-6 bg-gray-900 rounded-md shadow-lg border border-gray-700 transition-transform">
+    <div class="w-full min-h-screen bg-gray-800 text-white flex items-center justify-center flex-col gap-2" data-animate>
+        <form action="/update-post/<%= post._id %>" method="post" class="flex flex-col gap-4 w-96 p-6 bg-gray-900 rounded-md shadow-lg border border-gray-700 transition-transform card-raise">
             <h1 class="text-2xl font-bold text-center">Edit Your Post</h1>
             <input type="hidden" name="postId" value="<%= post._id %>">
             <input type="text" name="title" value="<%= post.title %>" placeholder="Title" class="w-full p-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
@@ -18,6 +19,7 @@
             <a href="/posts" class="text-center text-blue-400 hover:underline">Back to Posts</a>
         </form>
     </div>
+    <script src="/js/ui.js" defer></script>
     <script src="/javascript/myScripts.js"></script>
 </body>
 </html>
